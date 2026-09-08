@@ -1,18 +1,16 @@
-name: Build Android APK (NNECXY)
+herename: Build Android APK (NNECXY)
 on:
   push:
     branches: [main]
   workflow_dispatch:
-
 jobs:
   build-apk:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
-      - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          bun-version: latest
       - run: bun install
       - run: bun run build
       - uses: actions/setup-java@v4
@@ -21,10 +19,8 @@ jobs:
           java-version: '17'
       - uses: android-actions/setup-android@v3
       - run: bunx cap sync android
-      - run: chmod +x./android/gradlew
-      - run: |
-          cd android
-         ./gradlew assembleDebug
+      - run: chmod +x android/gradlew
+      - run: cd android &&./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:
           name: NNECXY.apk
