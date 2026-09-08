@@ -1,0 +1,7 @@
+{
+  "name": "NNECXY",
+  "description": "Application mobile sociale réelle NNECXY - Vidéos courtes, créateurs, messagerie, groupes et communauté",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

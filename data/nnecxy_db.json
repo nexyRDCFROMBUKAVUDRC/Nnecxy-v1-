@@ -1,0 +1,40 @@
+{
+  "profiles": [
+    {
+      "id": "ee742fab-f3db-49a9-bbaf-fd1e9e1f3973",
+      "first_name": "Justin",
+      "last_name": "Batumike",
+      "username": "justin_b",
+      "email": "justinbatumike902@gmail.com",
+      "birth_date": null,
+      "bio": "",
+      "avatar_url": "https://api.dicebear.com/7.x/bottts/svg?seed=justin_b",
+      "followers_count": 0,
+      "following_count": 0,
+      "created_at": "2026-09-08T10:57:12.159Z",
+      "updated_at": "2026-09-08T10:57:12.159Z"
+    }
+  ],
+  "videos": [],
+  "likes": [],
+  "comments": [],
+  "follows": [],
+  "video_views": [],
+  "video_events": [],
+  "conversations": [],
+  "conversation_members": [],
+  "messages": [],
+  "groups": [],
+  "group_members": [],
+  "notifications": [],
+  "reports": [],
+  "sessions": {
+    "531851782f06b8c085d33088abce6fc6da8f82b27198fc976edf56d91445feab": "ee742fab-f3db-49a9-bbaf-fd1e9e1f3973"
+  },
+  "credentials": {
+    "ee742fab-f3db-49a9-bbaf-fd1e9e1f3973": {
+      "hash": "b5405bb3046faba275cf9dbfff959d71f5b8c60a56803610fc6bbdee3686990c96a968ec8ab86536839306eda6267a674cc6a209be4d69fea89edf7d8cadec15",
+      "salt": "22c024f79eda334daf43e9b27fc56003"
+    }
+  }
+}

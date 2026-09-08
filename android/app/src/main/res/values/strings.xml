@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NNECXY</string>
+    <string name="title_activity_main">NNECXY</string>
+    <string name="package_name">com.nnecxy.app</string>
+    <string name="custom_url_scheme">com.nnecxy.app</string>
+</resources>
