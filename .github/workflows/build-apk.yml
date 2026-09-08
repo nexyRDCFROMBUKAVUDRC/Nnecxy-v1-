@@ -1,5 +1,4 @@
-name: Build Android APK (NNECXY)
-
+herename: Build Android APK (NNECXY)
 on:
   push:
     branches:
@@ -15,59 +14,37 @@ jobs:
   build-apk:
     name: Build NNECXY Android APK
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
-
       - name: Install Dependencies
-        run: npm ci || npm install
-
+        run: bun install
       - name: Build Web Assets
-        run: npm run build
-
-      - name: Setup Java JDK (Temurin 17)
+        run: bun run build
+      - name: Setup Java JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: 17
-          cache: 'gradle'
-
+          java-version: '17'
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-
       - name: Sync Capacitor Android
-        run: npx cap sync android
-
-      - name: Grant Execute Permission for Gradle Wrapper
+        run: bunx cap sync android
+      - name: Grant Execute Permission
         run: chmod +x ./android/gradlew
-
-      - name: Build Android APK with Gradle
+      - name: Build APK
         run: |
           cd android
-          ./gradlew assembleDebug --stacktrace
-
-      - name: Prepare and Verify NNECXY.apk
-        run: |
-          # Locate generated APK from build outputs
-          APK_PATH=$(find android/app/build/outputs/apk -name "*.apk" | head -n 1)
-          if [ -z "$APK_PATH" ]; then
-            echo "Error: No APK found after Gradle build!"
-            exit 1
-          fi
-          echo "Found APK at: $APK_PATH"
-          cp "$APK_PATH" NNECXY.apk
-          ls -lh NNECXY.apk
-
-      - name: Upload NNECXY.apk Artifact
+          ./gradlew assembleDebug
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: NNECXY.apk
-          path: NNECXY.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
