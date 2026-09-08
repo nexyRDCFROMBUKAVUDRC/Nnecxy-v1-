@@ -1,4 +1,4 @@
-herename: Build NNECXY APK
+name: Build NNECXY APK
 on:
   push:
     branches: [main]
