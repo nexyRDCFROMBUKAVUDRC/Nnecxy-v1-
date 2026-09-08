@@ -1,10 +1,10 @@
-herename: Build Android APK (NNECXY)
+herename: Build NNECXY APK
 on:
   push:
     branches: [main]
   workflow_dispatch:
 jobs:
-  build-apk:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,7 +15,7 @@ jobs:
       - run: bun run build
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
       - uses: android-actions/setup-android@v3
       - run: bunx cap sync android
@@ -23,5 +23,5 @@ jobs:
       - run: cd android &&./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:
-          name: NNECXY.apk
+          name: NNECXY-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
