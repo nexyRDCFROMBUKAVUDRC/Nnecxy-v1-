@@ -48,23 +48,26 @@ const [pseudo, setPseudo] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   if (!mode) return null;
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!loginIdentifier.trim() || !loginPassword) {
       setErrorMessage('Veuillez renseigner votre identifiant et votre mot de passe.');
       return;
     }
-
     setLoading(true);
     setErrorMessage(null);
-
     try {
-      const res = await api.login(loginIdentifier.trim(), loginPassword);
-      onAuthSuccess(res.user);
+      const res = await api.login({
+        identifier: loginIdentifier.trim(),
+        password: loginPassword,
+      });
+      console.log("Réponse login:", res);
+      const user = (res as any).user || res;
+      if (!user) throw new Error("Email ou mot de passe incorrect.");
+      onAuthSuccess(user);
       onClose();
     } catch (err: any) {
-      setErrorMessage(err.message || 'Échec de connexion.');
+      setErrorMessage(err.message || "Échec de connexion.");
     } finally {
       setLoading(false);
     }
@@ -75,27 +78,23 @@ const [pseudo, setPseudo] = useState('');
     setErrorMessage(null);
 
     if (!firstName.trim() || !lastName.trim() || !emailOrPhone.trim() || !username.trim() || !signupPassword) {
-      setErrorMessage('Tous les champs obligatoires doivent être renseignés.');
+      setErrorMessage("Tous les champs obligatoires doivent être renseignés.");
       return;
     }
-
     if (signupPassword.length < 6) {
-      setErrorMessage('Le mot de passe doit comporter au moins 6 caractères.');
+      setErrorMessage("Le mot de passe doit comporter au moins 6 caractères.");
       return;
     }
-
     if (signupPassword !== confirmPassword) {
-      setErrorMessage('Les mots de passe ne correspondent pas.');
+      setErrorMessage("Les mots de passe ne correspondent pas.");
       return;
     }
-
     if (!acceptTerms) {
       setErrorMessage("Vous devez accepter les conditions d'utilisation.");
       return;
     }
 
     setLoading(true);
-
     const isEmail = emailOrPhone.includes('@');
 
     try {
@@ -103,14 +102,18 @@ const [pseudo, setPseudo] = useState('');
         first_name: firstName.trim(),
         last_name: lastName.trim(),
         email: isEmail ? emailOrPhone.trim() : undefined,
-        phone: !isEmail ? emailOrPhone.trim() : undefined,
-        birth_date: birthDate || undefined,
+        phone: isEmail ? undefined : emailOrPhone.trim(),
+        // birth_date retiré temporairement pour débloquer la création selon Section 10 du PDF
         username: username.trim(),
         password: signupPassword,
         accept_terms: acceptTerms,
       });
 
-      onAuthSuccess(res.user);
+      console.log("Réponse signup:", res);
+      const user = (res as any).user || res;
+      if (!user) throw new Error("Compte créé, veuillez vous connecter.");
+      
+      onAuthSuccess(user);
       onClose();
     } catch (err: any) {
       setErrorMessage(err.message || "Erreur lors de la création de l'utilisateur.");
@@ -118,8 +121,16 @@ const [pseudo, setPseudo] = useState('');
       setLoading(false);
     }
   };
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!loginIdentifier.trim() || !loginPassword) {
+      setErrorMessage('Veuillez renseigner votre identifiant et votre mot de passe.');
+      return;
+    }
 
-  const handleForgot = async (e: React.FormEvent) => {
+    setLoading(true);
+    setErrorMessage(null);
+= async (e: React.FormEvent) => {
     e.preventDefault();
     if (!forgotEmail.trim()) {
       setErrorMessage('Veuillez renseigner votre adresse email.');
