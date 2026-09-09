@@ -35,7 +35,7 @@ export const AuthModals: React.FC<AuthModalsProps> = ({
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [username, setUsername] = useState('');
-  const [signupPassword, setSignupPassword] = useState('');
+const [pseudo, setPseudo] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [acceptTerms, setAcceptTerms] = useState(false);
 
